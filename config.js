@@ -4,7 +4,7 @@
 // export const DOMAIN = 'http://localhost:3000';
 
 
-export const DOMAIN = 'https://mangawebsite.vercel.app'
+export const DOMAIN = 'https://mangachimp.vercel.app/'
 export const BACKEND_DOMAIN = 'https://backend-mangawebsite.vercel.app'
 
 
