@@ -26,6 +26,7 @@ export async function getStaticProps() {
       return { props: { errorCode: 404 } };
     }
 
+
     return {
       props: {
         mangas: data?.data || [],
@@ -67,7 +68,7 @@ register();
 
 export default function Home({ mangas, mangapercategory, categories, latestmangas }) {
 
-  const [selectedCategory, setSelectedCategory] = useState('Shonen'); // Default category
+  const [selectedCategory, setSelectedCategory] = useState('Shonen');
 
   const handleChangeCategory = (category) => {
     setSelectedCategory(category);
@@ -180,7 +181,7 @@ export default function Home({ mangas, mangapercategory, categories, latestmanga
         >
 
           {latestmangas?.map((manga, index) => (
-            <div className="flex justify-center items-center gap-5 flex-wrap">
+            <div className="flex justify-center items-center gap-5 flex-wrap" key={index}>
               <SwiperSlide>
                 <div className="hover:scale-110 transition-transform rounded shadow w-[190px] bg-[#091e25]" key={index}>
                   <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}`}>
@@ -205,8 +206,8 @@ export default function Home({ mangas, mangapercategory, categories, latestmanga
 
         <div className='flex gap-3 justify-center md:mt-[80px] mt-5  bg-[#040c0f] flex-wrap py-5 px-2 md:py-0 md:px-0 rounded'>
           {categories?.map((category) => (
-            <div key={category.slug} onClick={() => handleChangeCategory(category?.name)}
-              className={`cursor-pointer px-3 uppercase py-2 text-[13px] text-white font-bold ${selectedCategory === category.name ? 'bg-[#091e25] rounded' : 'text-white hover:scale-105 transition-transform active:scale-90 hover:bg-[#091e25] hover:rounded'}`}>
+            <div key={category?.slug} onClick={() => handleChangeCategory(category?.name)}
+              className={`cursor-pointer px-3 uppercase py-2 text-[13px] text-white font-bold ${selectedCategory === category?.name ? 'bg-[#091e25] rounded' : 'text-white hover:scale-105 transition-transform active:scale-90 hover:bg-[#091e25] hover:rounded'}`}>
               {category?.name}
             </div>
           ))}
@@ -215,7 +216,7 @@ export default function Home({ mangas, mangapercategory, categories, latestmanga
 
 
       <h2 className={`${roboto.className} text-2xl tracking-wider font-extrabold my-6 text-center uppercase text-white`}>{selectedCategory}</h2>
-      <main className="max-w-[1300px] mx-auto px-2 sm:px-6 lg:px-8 py-4 text-white">
+      <div className="max-w-[1300px] mx-auto px-2 sm:px-6 lg:px-8 py-4 text-white">
         <div className="flex gap-12 flex-wrap justify-center">
           {mangapercategory[selectedCategory]?.map((manga) => (
             <Link href={`${DOMAIN}/manga/${manga?.slug}`} key={manga?.slug} className="bg-[#091e25] overflow-hidden shadow rounded-b w-[190px] flex flex-col hover:scale-110 transition-transform">
@@ -229,7 +230,7 @@ export default function Home({ mangas, mangapercategory, categories, latestmanga
           ))}
 
         </div>
-      </main>
+      </div>
 
 
 
