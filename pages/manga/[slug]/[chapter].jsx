@@ -79,8 +79,10 @@ import { FaHome } from "react-icons/fa";
 import { GiBlackBook } from "react-icons/gi";
 import { useRouter } from 'next/router';
 import { useState, useEffect } from "react";
-
+import { FaArrowRightLong } from "react-icons/fa6";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
+import { FaGripLines } from "react-icons/fa";
+import { AiFillChrome } from "react-icons/ai";
 const roboto = Rubik({ subsets: ['latin'], weight: '800', });
 // const roboto2 = Rubik({ subsets: ['latin'], weight: '700', });
 
@@ -289,27 +291,27 @@ export default function Chapter({ errorcode, manga, chapterArray, relatedMangas,
             <Navbar />
 
             <article className=''>
-                <h1 className={`${roboto.className} font-extrabold text-3xl text-center px-2 pt-10 mb-3`}>{`${manga?.name} Chapter ${chapterData?.chapterNumber}`}</h1>
+                <h1 className={`${roboto.className} text-white font-extrabold text-3xl text-center px-2 pt-10 mb-3`}>{`${manga?.name} Chapter ${chapterData?.chapterNumber}`}</h1>
 
-                <div className='flex justify-center flex-wrap items-center gap-3 mb-10 text-blue-600'>
+                <div className='flex justify-center flex-wrap items-center gap-2 text-[13px] mb-10 text-blue-600'>
 
                     <div className='flex items-center gap-2'>
                         <div><FaHome /></div>
                         <div><Link prefetch={false} href={`${DOMAIN}`}>Home</Link></div>
                     </div>
 
-                    <div>🢥</div>
+                    <div>{`->`}</div>
 
                     <div className='flex items-center gap-2'>
-                        <div><FaHome /></div>
+                        <div><AiFillChrome /></div>
                         <div><Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}`}>{`${manga?.name}`}</Link></div>
                     </div>
 
-                    <div>🢥</div>
+                    <div>{`->`}</div>
 
                     <div className='flex items-center gap-2'>
                         <div><GiBlackBook /></div>
-                        <div><Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}/chapter-${chapterData?.chapterNumber}`}>{`${manga?.name} Chapter ${chapterData?.chapterNumber}`}</Link></div>
+                        <div><Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}/chapter-${chapterData?.chapterNumber}`}>{` Chapter ${chapterData?.chapterNumber}`}</Link></div>
                     </div>
 
                 </div>

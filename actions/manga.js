@@ -138,3 +138,21 @@ export const getHomePageMangaPerCategory = async () => {
         return await response.json();
     } catch (err) { return console.log(err); }
 }
+
+
+
+
+
+
+
+export const GetLatestMangas = async () => {
+    try {
+        const response = await fetch(`${BACKEND_DOMAIN}/api/manga/get-latest-mangas`, {
+            method: 'GET', headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            }
+        });
+        return await response.json();
+    } catch (err) { return console.log(err); }
+}

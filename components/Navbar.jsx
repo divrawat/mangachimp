@@ -19,7 +19,7 @@ export default function Navbar() {
 
     return (
 
-        <nav className="md:pb-1 md:pt-1  text-[white] bg-base-dark-color">
+        <nav className="md:pb-1 md:pt-1  text-[white] bg-[#091e25]">
             <div className="container mx-auto md:flex items-center justify-center md:justify-between max-w-[1200px]">
                 <div className="flex items-center md:space-x-4 justify-between">
                     <div className="flex items-center">

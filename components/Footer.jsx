@@ -8,7 +8,7 @@ export default function Footer() {
 
     return (
 
-        <footer className="  bg-base-dark-color text-[whitesmoke]">
+        <footer className="  bg-[#091e25] text-[whitesmoke]">
             <div className="py-2 max-w-[1100px] mx-auto">
                 <div className="container mx-auto md:flex flex-wrap justify-between items-center">
                     <div className="md:flex items-center text-center">
