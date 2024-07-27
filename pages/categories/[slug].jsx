@@ -17,11 +17,6 @@ export async function getServerSideProps({ query, res }) {
 }
 
 
-
-
-
-
-
 import Head from 'next/head';
 import { singleCategory } from '@/actions/category';
 import { DOMAIN, APP_NAME } from '@/config';
@@ -47,9 +42,9 @@ const Category = ({ errorCode, category, mangas, query, totalCount }) => {
                 <div>
                     <br />
                     <div className="flex justify-center items-center h-[70vh]">
-                        <img src="/404.jpg" className="max-w-full max-h-full" alt="" />
+                        <img src="/404.jpg" className="max-w-full max-h-full rounded-full" alt="" />
                     </div>
-                    <div className=' text-center font-bold text-5xl mb-10'>Page Not Found</div>
+                    <div className=' text-center font-bold text-5xl mb-10 text-white my-5'>Page Not Found</div>
                 </div>
                 <Footer />
             </>

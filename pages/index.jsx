@@ -1,17 +1,3 @@
-/*
-export async function getServerSideProps() {
-  try {
-    const data = await getMangasHomePage();
-    if (data.error) {
-      return { props: { errorCode: 404 } };
-    } else { return { props: { mangas: data?.data } }; }
-  } catch (error) {
-    console.error(error);
-    return { props: { errorCode: 500 } };
-  }
-}
-  */
-
 
 export async function getStaticProps() {
   try {
@@ -52,7 +38,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import "swiper/swiper-bundle.css";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { getMangasHomePage, getHomePageMangaPerCategory, GetLatestMangas } from "@/actions/manga";
@@ -68,33 +54,47 @@ register();
 
 export default function Home({ mangas, mangapercategory, categories, latestmangas }) {
 
-  const [selectedCategory, setSelectedCategory] = useState('Shonen');
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const handleChangeCategory = (category) => { setSelectedCategory(category); };
 
-  const handleChangeCategory = (category) => {
-    setSelectedCategory(category);
+  const getMangasToDisplay = () => {
+    let mangasToDisplay = [];
+    if (selectedCategory === '') { mangasToDisplay = Object.values(mangapercategory).flat(); }
+    else { mangasToDisplay = mangapercategory[selectedCategory] || []; }
+    const seenSlugs = new Set();
+    const uniqueMangas = mangasToDisplay.filter(manga => {
+      if (seenSlugs.has(manga.slug)) { return false; }
+      seenSlugs.add(manga.slug);
+      return true;
+    });
+    return uniqueMangas;
   };
+
+
+
+
 
   return (
     <div>
       <Navbar />
       <br />
 
-      <h1 className={`${roboto.className} tracking-wider text-white font-extrabold text-2xl px-3 text-center mb-10 mt-5`}>
+
+
+      <h1 className={`${roboto.className} text-white tracking-wider font-extrabold text-2xl px-3 text-center mb-10 mt-5`}>
         {`${APP_NAME}: Ultimate Destination For Reading Mangas`}
       </h1>
 
 
 
-
       <Swiper loop={true} centeredSlides={true}
-        autoplay={{ delay: 2500, disableOnInteraction: false }}
+        // autoplay={{ delay: 2500, disableOnInteraction: false }}
         pagination={{ clickable: true }}
         modules={[Autoplay, Pagination, Navigation]} className="mySwiper" >
 
         {mangas?.map((manga, index) => (
           <SwiperSlide key={index}>
-
-            <div className={`${roboto2.className} max-w-[1150px] shadow mx-auto md:h-[420px] rounded-lg overflow-hidden bg-[#091e25] text-white`}>
+            <div className={`${roboto2.className} bg-[#091e25] max-w-[1150px] shadow mx-auto md:h-[420px] rounded-lg overflow-hidden  text-white`}>
               <div className="md:flex gap-28 justify-center cursor-pointer">
                 <div className="flex justify-center md:block sm:pt-0 pt-3">
                   <Link href={`${DOMAIN}/manga/${manga?.slug}`}>
@@ -107,10 +107,10 @@ export default function Home({ mangas, mangapercategory, categories, latestmanga
                     <h2 className={`${roboto.className} text-2xl font-bold text-center tracking-wider md:text-left`}>{manga?.fullname}</h2>
                   </Link>
 
-                  <p className="text-[15px] mt-5 md:pr-5">{`Read ${manga?.fullname} ${manga?.type} online in English language. ${manga?.description}`}</p>
+                  <p className="text-[15px] mt-5 md:pr-5 text-center md:text-left">{`Read ${manga?.fullname} ${manga?.type} online in English language. ${manga?.description}`}</p>
 
 
-                  <div className='max-w-[600px]'>
+                  <div className='max-w-[600px] mx-auto md:mx-0'>
                     <div className="flex flex-wrap md:justify-start justify-center gap-4 mt-10 mb-5">
                       {manga?.categories?.map((category, index) => (
                         <Link key={index} href={`${DOMAIN}/categories/${category?.slug}?page=1`} className=" bg-[#051015] hover:scale-110 transition-transform active:scale-95 text-white px-2 py-1.5 rounded-md inline-block text-sm">
@@ -120,40 +120,28 @@ export default function Home({ mangas, mangapercategory, categories, latestmanga
                     </div>
                   </div>
 
-                  <Link href={`${DOMAIN}/manga/${manga?.slug}`} className="flex justify-center md:block mb-5 mt-7"> <div className="bg-[#051015] text-white px-3 py-2 w-[160px] rounded hover:scale-110 transition-transform active:scale-95 text-[15px]">
+                  <Link href={`${DOMAIN}/manga/${manga?.slug}`} className="flex justify-center md:block mb-5 mt-7">
+                    <div className="bg-[#051015] text-white px-3 py-2 w-[160px] rounded hover:scale-110 transition-transform active:scale-95 text-[15px]">
 
-                    <div className="flex gap-3 items-center">
-                      <div className='font-bold tracking-wider'>Start Reading</div>
-                      <div><FaArrowAltCircleRight /></div>
+                      <div className="flex gap-3 items-center">
+                        <div className='font-bold tracking-wider text-[14px]'>Start Reading</div>
+                        <div><FaArrowAltCircleRight /></div>
+                      </div>
                     </div>
-                  </div>
-
-
                   </Link>
-
 
                 </div>
               </div>
             </div>
-
           </SwiperSlide>))}
       </Swiper>
 
 
 
 
-
-
-
-
-
-
-
       <div className='max-w-[1200px] mx-auto pt-8'>
 
-        <div className={`${roboto.className} text-2xl text-center text-white font-bold tracking-wider my-5`}>Newly Added</div>
-
-
+        <div className={`${roboto.className} text-2xl text-center text-white font-bold tracking-wider my-5`}>Newly Added Mangas</div>
         <Swiper slidesPerView={1} spaceBetween={5} pagination={{ clickable: true }} modules={[Autoplay, Pagination]} className="mySwiper"
           autoplay={{ delay: 2500, disableOnInteraction: false }}
           breakpoints={{
@@ -197,40 +185,43 @@ export default function Home({ mangas, mangapercategory, categories, latestmanga
             </div>
           ))}
         </Swiper>
-
       </div>
 
 
-
-      <div className='max-w-[1142px] mx-auto pt-8'>
-
-        <div className='flex gap-3 justify-center md:mt-[80px] mt-5  bg-[#040c0f] flex-wrap py-5 px-2 md:py-0 md:px-0 rounded'>
+      <div className='max-w-[1262px] mx-auto pt-8'>
+        <div className='flex gap-3 justify-center md:mt-[80px] mt-5 bg-[#07161a] flex-wrap py-5 px-2 md:py-0 md:px-0 rounded'>
+          <div
+            onClick={() => handleChangeCategory('')}
+            className={`cursor-pointer px-3 uppercase py-2 text-[13px] text-white font-bold ${selectedCategory === '' ? 'bg-[#2a798f] rounded' : 'text-white hover:scale-105 transition-transform active:scale-90 hover:bg-[#2a798f] hover:rounded'}`}>
+            All Mangas
+          </div>
           {categories?.map((category) => (
             <div key={category?.slug} onClick={() => handleChangeCategory(category?.name)}
-              className={`cursor-pointer px-3 uppercase py-2 text-[13px] text-white font-bold ${selectedCategory === category?.name ? 'bg-[#091e25] rounded' : 'text-white hover:scale-105 transition-transform active:scale-90 hover:bg-[#091e25] hover:rounded'}`}>
+              className={`cursor-pointer px-3 uppercase py-2 text-[13px] text-white font-bold ${selectedCategory === category?.name ? 'bg-[#2a798f] rounded' : 'text-white hover:scale-105 transition-transform active:scale-90 hover:bg-[#2a798f] hover:rounded'}`}>
               {category?.name}
             </div>
           ))}
         </div>
       </div>
 
+      <h2 className={`${roboto.className} text-2xl tracking-wider font-extrabold my-6 text-center uppercase text-white`}>
+        {selectedCategory === '' ? 'All Mangas' : selectedCategory}
+      </h2>
 
-      <h2 className={`${roboto.className} text-2xl tracking-wider font-extrabold my-6 text-center uppercase text-white`}>{selectedCategory}</h2>
       <div className="max-w-[1300px] mx-auto px-2 sm:px-6 lg:px-8 py-4 text-white">
         <div className="flex gap-12 flex-wrap justify-center">
-          {mangapercategory[selectedCategory]?.map((manga) => (
+          {getMangasToDisplay().map((manga) => (
             <Link href={`${DOMAIN}/manga/${manga?.slug}`} key={manga?.slug} className="bg-[#091e25] overflow-hidden shadow rounded-b w-[190px] flex flex-col hover:scale-110 transition-transform">
               <img className='w-[190px] h-[220px] object-cover' src={manga?.photo} alt={manga?.name} />
               <div className="px-4 py-5">
-                <p className="text-[12px] pb-1.5">{`Total Chapters:  ${manga?.totalChapters ?? 0}`}</p>
-                <h3 style={{ height: '40px', overflow: 'hidden', textOverflow: 'ellipsis' }} className="text-[14px] font-bold  w-[185px]">{manga?.name}</h3>
-
+                <p className="text-[12px] pb-1.5">{`Total Chapters: ${manga?.totalChapters ?? 0}`}</p>
+                <h3 style={{ height: '40px', overflow: 'hidden', textOverflow: 'ellipsis' }} className="text-[14px] font-bold w-[185px]">{manga?.name}</h3>
               </div>
             </Link>
           ))}
-
         </div>
       </div>
+
 
 
 

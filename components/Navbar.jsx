@@ -15,15 +15,15 @@ export default function Navbar() {
         if (ref.current.style.display === 'block') { ref.current.style.display = 'none'; }
         else { ref.current.style.display = 'block'; }
     };
-
+    // bg-[#091e25]
 
     return (
 
-        <nav className="md:pb-1 md:pt-1  text-[white] bg-[#091e25]">
+        <nav className="md:pb-1 md:pt-1  text-[white]  bg-[#020709]">
             <div className="container mx-auto md:flex items-center justify-center md:justify-between max-w-[1200px]">
                 <div className="flex items-center md:space-x-4 justify-between">
-                    <div className="flex items-center">
-                        {/* {logo} */}
+                    <div className="flex items-center py-1">
+                        <div className="px-4"> <img src="/logo.jpg" alt="" height={80} width={80} className="rounded-full" /></div>
                         <span className=" text-lg tracking-wider text-[19px] font-extrabold md:text-[22px]"><Link className={`${roboto.className}`} href="/">{NavbarName}</Link></span>
 
                     </div>
@@ -36,7 +36,7 @@ export default function Navbar() {
                     <ul id="menu" ref={menuRef} className="md:flex md:space-x-10 md:pb-0 pb-4 items-center font-bold  text-center leading-[3] hidden">
                         {navLinks.map((link, index) => (
                             <li key={index}>
-                                <Link prefetch={false} href={link.href} className="hover:text-[#a5a5f3] font-bold hover:underline">{link.text}</Link>
+                                <Link prefetch={false} href={link.href} className={`${roboto.className} hover:text-blue-300 tracking-wider text-[17px] font-bold hover:underline uppercase`}>{link.text}</Link>
                             </li>
                         ))}
                     </ul>
