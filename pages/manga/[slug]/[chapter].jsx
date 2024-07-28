@@ -242,16 +242,28 @@ export default function Chapter({ errorcode, manga, chapterArray, relatedMangas,
         <Head>
             <title>{`${manga?.name} Chapter ${chapterData?.chapterNumber}: ${APP_NAME}`}</title>
             <meta name="description" content={DESCRIPTION} />
+            <meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large" />
+            <meta name="googlebot" content="noarchive" />
+            <meta name="robots" content="noarchive" />
             <link rel="canonical" href={`${DOMAIN}/manga/${manga?.slug}/chapter-${chapterData?.chapterNumber}`} />
             <meta property="og:title" content={`${manga?.name} Chapter ${chapterData?.chapterNumber}`} />
             <meta property="og:description" content={DESCRIPTION} />
             <meta property="og:type" content="webiste" />
-            <meta name="robots" content="follow, index, noarchive, max-snippet:-1, max-video-preview:-1, max-image-preview:large" />
             <meta property="og:url" content={`${DOMAIN}/manga/${manga?.slug}/chapter-${chapterData?.chapterNumber}`} />
             <meta property="og:site_name" content={`${APP_NAME}`} />
             <meta property="og:image" content={`${IMAGES_SUBDOMAIN}/${manga?.slug}/chapter-${chapterData?.chapterNumber}/1.webp`} />
             <meta property="og:image:secure_url" content={`${IMAGES_SUBDOMAIN}/${manga?.slug}/chapter-${chapterData?.chapterNumber}/1.webp`} />
             <meta property="og:image:type" content="image/webp" />
+            <meta name="twitter:card" content="summary_large_image" />
+            <meta name="twitter:title" content={`${manga?.name} Chapter ${chapterData?.chapterNumber}: ${APP_NAME}`} />
+            <meta name="twitter:description" content={DESCRIPTION} />
+            <meta name="twitter:site" content="@mangachimp" />
+            <meta name="twitter:creator" content="@mangachimp" />
+            <meta name="twitter:image" content={`${manga?.photo}`} />
+            <meta name="twitter:label1" content="Written by" />
+            <meta name="twitter:data1" content={`${APP_NAME}`} />
+            <meta name="twitter:label2" content="Time to read" />
+            <meta name="twitter:data2" content="1 minute" />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
         </Head>
     );
@@ -289,126 +301,127 @@ export default function Chapter({ errorcode, manga, chapterArray, relatedMangas,
         <>
             {head()}
             <Navbar />
+            <main>
+                <article>
+                    <h1 className={`${roboto.className} text-white font-extrabold sm:text-3xl text-2xl text-center px-4 pt-5 mb-3`}>{`${manga?.name} Chapter ${chapterData?.chapterNumber}`}</h1>
 
-            <article className=''>
-                <h1 className={`${roboto.className} text-white font-extrabold sm:text-3xl text-2xl text-center px-4 pt-5 mb-3`}>{`${manga?.name} Chapter ${chapterData?.chapterNumber}`}</h1>
+                    <div className='flex justify-center flex-wrap items-center gap-2 text-[13px] mb-10 text-blue-300'>
 
-                <div className='flex justify-center flex-wrap items-center gap-2 text-[13px] mb-10 text-blue-300'>
+                        <div className='flex items-center gap-2'>
+                            <div><FaHome /></div>
+                            <div><Link prefetch={false} href={`${DOMAIN}`}>Home</Link></div>
+                        </div>
 
-                    <div className='flex items-center gap-2'>
-                        <div><FaHome /></div>
-                        <div><Link prefetch={false} href={`${DOMAIN}`}>Home</Link></div>
+                        <div>{`->`}</div>
+
+                        <div className='flex items-center gap-2'>
+                            <div><AiFillChrome /></div>
+                            <div><Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}`}>{`${manga?.name}`}</Link></div>
+                        </div>
+
+                        <div>{`->`}</div>
+
+                        <div className='flex items-center gap-2'>
+                            <div><GiBlackBook /></div>
+                            <div><Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}/chapter-${chapterData?.chapterNumber}`}>{` Chapter ${chapterData?.chapterNumber}`}</Link></div>
+                        </div>
+
                     </div>
 
-                    <div>{`->`}</div>
 
-                    <div className='flex items-center gap-2'>
-                        <div><AiFillChrome /></div>
-                        <div><Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}`}>{`${manga?.name}`}</Link></div>
-                    </div>
-
-                    <div>{`->`}</div>
-
-                    <div className='flex items-center gap-2'>
-                        <div><GiBlackBook /></div>
-                        <div><Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}/chapter-${chapterData?.chapterNumber}`}>{` Chapter ${chapterData?.chapterNumber}`}</Link></div>
-                    </div>
-
-                </div>
-
-
-                <div className='mx-3  px-1 pb-5'>
-                    <div className="flex justify-between max-w-[800px] items-center mx-auto md:pb-[50px] mt-5">
-                        {nextChapter !== null ? (
-                            <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}/chapter-${nextChapter}`}>
-                                <button className="text-[black] font-bold text-[13px] hover:scale-105 active:scale-95 transition-transform rounded bg-[white] px-2 py-1.5">
+                    <div className='mx-3  px-1 pb-5'>
+                        <div className="flex justify-between max-w-[800px] items-center mx-auto md:pb-[50px] mt-5">
+                            {nextChapter !== null ? (
+                                <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}/chapter-${nextChapter}`}>
+                                    <button className="text-[black] font-bold text-[13px] hover:scale-105 active:scale-95 transition-transform rounded bg-[white] px-2 py-1.5">
+                                        <div className='flex items-center gap-2 justify-center'>
+                                            <div className='pt-[1.5px]'><FaArrowAltCircleLeft /></div>
+                                            <div>Prev</div>
+                                        </div>
+                                    </button>
+                                </Link>
+                            ) : (
+                                <button className="text-[white] text-[13px] rounded bg-[gray] px-2 py-1.5 font-bold cursor-not-allowed" disabled>
                                     <div className='flex items-center gap-2 justify-center'>
                                         <div className='pt-[1.5px]'><FaArrowAltCircleLeft /></div>
                                         <div>Prev</div>
                                     </div>
                                 </button>
-                            </Link>
-                        ) : (
-                            <button className="text-[white] text-[13px] rounded bg-[gray] px-2 py-1.5 font-bold cursor-not-allowed" disabled>
-                                <div className='flex items-center gap-2 justify-center'>
-                                    <div className='pt-[1.5px]'><FaArrowAltCircleLeft /></div>
-                                    <div>Prev</div>
-                                </div>
-                            </button>
-                        )}
+                            )}
 
 
 
-                        <div className="w-[120px]">
-                            <select className="bg-[white] cursor-pointer border border-gray-300 text-gray-900 text-[13.5px] rounded-lg block w-full   p-1.5" onChange={navigateTo}>
-                                {
-                                    chaptersArray?.map((chapter, index) => (
-                                        <option className='cursor-pointer' selected={`${DOMAIN}/manga/${manga?.slug}/chapter-${chapter}` === `${DOMAIN}/manga/${manga?.slug}/chapter-${chapterData?.chapterNumber}`}
-                                            key={index} value={`${DOMAIN}/manga/${manga?.slug}/chapter-${chapter}`}>{`Chapter ${chapter}`}</option>
-                                    ))
-                                }
-                            </select>
-                        </div>
+                            <div className="w-[120px]">
+                                <select className="bg-[white] cursor-pointer border border-gray-300 text-gray-900 text-[13.5px] rounded-lg block w-full   p-1.5" onChange={navigateTo}>
+                                    {
+                                        chaptersArray?.map((chapter, index) => (
+                                            <option className='cursor-pointer' selected={`${DOMAIN}/manga/${manga?.slug}/chapter-${chapter}` === `${DOMAIN}/manga/${manga?.slug}/chapter-${chapterData?.chapterNumber}`}
+                                                key={index} value={`${DOMAIN}/manga/${manga?.slug}/chapter-${chapter}`}>{`Chapter ${chapter}`}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
 
 
 
-                        {prevChapter !== null ? (
-                            <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}/chapter-${prevChapter}`}>
-                                <button className="text-[black] text-[13px] hover:scale-105 active:scale-95 transition-transform rounded
+                            {prevChapter !== null ? (
+                                <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}/chapter-${prevChapter}`}>
+                                    <button className="text-[black] text-[13px] hover:scale-105 active:scale-95 transition-transform rounded
                                  bg-[white] px-2 py-1.5 font-bold">
+                                        <div className='flex items-center gap-2 justify-center'>
+                                            <div>Next</div>
+                                            <div className='pt-[1.5px]'><FaArrowAltCircleRight /></div>
+                                        </div>
+                                    </button>
+                                </Link>
+                            ) : (
+                                <button className="text-[white] text-[13px] rounded bg-[gray] px-2 py-1.5 font-bold cursor-not-allowed" disabled>
                                     <div className='flex items-center gap-2 justify-center'>
                                         <div>Next</div>
                                         <div className='pt-[1.5px]'><FaArrowAltCircleRight /></div>
                                     </div>
                                 </button>
-                            </Link>
-                        ) : (
-                            <button className="text-[white] text-[13px] rounded bg-[gray] px-2 py-1.5 font-bold cursor-not-allowed" disabled>
-                                <div className='flex items-center gap-2 justify-center'>
-                                    <div>Next</div>
-                                    <div className='pt-[1.5px]'><FaArrowAltCircleRight /></div>
-                                </div>
-                            </button>
-                        )}
+                            )}
 
+                        </div>
                     </div>
-                </div>
 
 
-                {images?.map((imageSrc, index) => (
-                    <div className='allimages' key={index}>
-                        <img key={index} src={imageSrc} alt={`${manga?.name} Chapter ${chapterData?.chapterNumber} Image ${index + 1}`} />
-                    </div>
-                ))}
-
-
-                <div className='max-w-[800px] mx-auto mt-10'>
-                    {paragraphs?.map((paragraph, index) => (
-                        <p key={index} className=' py-6 tracking-wider leading-7 text-[15px]'>{paragraph}</p>
+                    {images?.map((imageSrc, index) => (
+                        <div className='allimages' key={index}>
+                            <img key={index} src={imageSrc} alt={`${manga?.name} Chapter ${chapterData?.chapterNumber} Image ${index + 1}`} />
+                        </div>
                     ))}
-                </div>
 
 
-                <div className="max-w-[1300px] mx-auto mt-10">
-
-                    <h2 className={`${roboto.className} text-center text-white text-3xl font-bold pb-10`}>Related</h2>
-
-                    <div className="flex justify-center gap-10 flex-wrap pb-10 px-5">
-                        {relatedMangas?.map((manga, index) => (
-                            <div className="hover:scale-110 transition-transform text-white rounded shadow w-[200px] bg-[#051015]" key={index}>
-                                <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}`}>
-                                    <img src={manga?.photo} alt={`${manga?.name} Cover`} className="mb-2 h-[230px] w-[200px] object-cover" />
-                                    <div className='px-5 py-3'>
-                                        <p className="text-[13.5px] font-bold mb-1 text-wrap break-words">{manga?.name}</p>
-                                        <p className="text-[11.5px] mb-1">{` Total Chapters:  ${manga?.chapterCount}`}</p>
-                                    </div>
-                                </Link>
-                            </div>
+                    <div className='max-w-[800px] mx-auto mt-10'>
+                        {paragraphs?.map((paragraph, index) => (
+                            <p key={index} className=' py-6 tracking-wider leading-7 text-[15px]'>{paragraph}</p>
                         ))}
                     </div>
-                </div>
 
-            </article>
+
+                    <div className="max-w-[1300px] mx-auto mt-10">
+
+                        <h2 className={`${roboto.className} text-center text-white text-3xl font-bold pb-10`}>Related</h2>
+
+                        <div className="flex justify-center gap-10 flex-wrap pb-10 px-5">
+                            {relatedMangas?.map((manga, index) => (
+                                <div className="hover:scale-110 transition-transform text-white rounded shadow w-[200px] bg-[#051015]" key={index}>
+                                    <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}`}>
+                                        <img src={manga?.photo} alt={`${manga?.name} Cover`} className="mb-2 h-[230px] w-[200px] object-cover" />
+                                        <div className='px-5 py-3'>
+                                            <p className="text-[13.5px] font-bold mb-1 text-wrap break-words">{manga?.name}</p>
+                                            <p className="text-[11.5px] mb-1">{` Total Chapters:  ${manga?.chapterCount}`}</p>
+                                        </div>
+                                    </Link>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+
+                </article>
+            </main>
             <Footer />
         </>
     );

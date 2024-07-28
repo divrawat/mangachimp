@@ -132,11 +132,13 @@ const Category = ({ errorCode, category, mangas, query, totalCount }) => {
         <Head>
             <title>{`${category.name} Page ${currentPage}: ${APP_NAME}`}</title>
             <meta name="description" content={DESCRIPTION} />
+            <meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large" />
+            <meta name="googlebot" content="noarchive" />
+            <meta name="robots" content="noarchive" />
             <link rel="canonical" href={`${DOMAIN}/categories/${category.name}?page=${currentPage}`} />
             <meta property="og:title" content={`${category.name} Page ${currentPage}: ${APP_NAME}`} />
             <meta property="og:description" content={DESCRIPTION} />
             <meta property="og:type" content="webiste" />
-            <meta name="robots" content="follow, index, noarchive, max-snippet:-1, max-video-preview:-1, max-image-preview:large" />
             <meta property="og:url" content={`${DOMAIN}/categories/${category.name}?page=${currentPage}`} />
             <meta property="og:site_name" content={`${APP_NAME}`} />
             <meta property="og:image:type" content="image/webp" />
@@ -181,54 +183,56 @@ const Category = ({ errorCode, category, mangas, query, totalCount }) => {
         <>
             {head()}
             <Navbar />
+            <main>
+                <article>
+                    <div className='my-5 max-w-[1350px] mx-auto p-3 text-white'>
 
-            <div className='my-5 max-w-[1350px] mx-auto p-3 text-white'>
+                        <h1 className={`${roboto.className}  text-3xl font-semibold mb-5 text-center`}>{category.name}</h1>
+                        <p className='text-center mb-5'>{`Total Results: ${totalCount}`}</p>
 
-                <h1 className={`${roboto.className}  text-3xl font-semibold mb-5 text-center`}>{category.name}</h1>
-                <p className='text-center mb-5'>{`Total Results: ${totalCount}`}</p>
+                        <div className='flex text-[13px] flex-wrap justify-center items-center gap-2 mb-10 text-blue-300'>
 
-                <div className='flex text-[13px] flex-wrap justify-center items-center gap-2 mb-10 text-blue-300'>
+                            <div className='flex items-center gap-2'>
+                                <div><FaHome /></div>
+                                <div><Link prefetch={false} href={`${DOMAIN}`}>Home</Link></div>
+                            </div>
 
-                    <div className='flex items-center gap-2'>
-                        <div><FaHome /></div>
-                        <div><Link prefetch={false} href={`${DOMAIN}`}>Home</Link></div>
+                            <div>{`->`}</div>
+
+                            <div><Link prefetch={false} href={`${DOMAIN}/categories/${category?.slug}?page=${currentPage}`}>{category.name}</Link></div>
+                        </div>
+
+
+
+                        <div className="flex justify-center gap-10 flex-wrap">
+                            {mangas?.map((manga, index) => (
+                                <div className="hover:scale-110 transition-transform rounded shadow text-center w-[200px] bg-[#091e25]" key={index}>
+                                    <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}`}>
+                                        <img src={manga?.photo} alt={`${manga?.name} Cover`} className="mb-2 h-[220px] w-[200px] object-cover" />
+                                        <div className='p-3'>
+                                            <h3 className={`${roboto.className} text-[14px] mb-1 text-wrap break-words`}>{manga?.name}</h3>
+                                            <p className="text-[12px] mb-1">{`Total Chapters:  ${manga?.totalChapters ?? 0}`}</p>
+                                        </div>
+                                    </Link>
+                                </div>
+                            ))}
+                        </div>
+
+
+                        <div className='flex justify-center items-center my-10' id='pagination'>
+                            {pageNumbers.map((pageNum, index) => (
+                                <Link prefetch={false} key={index} href={`${DOMAIN}/categories/${slug}?page=${pageNum}`} className={`mx-2 px-4 py-2 rounded-lg ${currentPage === pageNum ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300'}`}
+                                    onClick={() => { if (typeof pageNum === 'number') { handlePageChange(pageNum); } }}>
+                                    {pageNum}
+                                </Link>
+                            ))}
+                        </div>
+
+
                     </div>
 
-                    <div>{`->`}</div>
-
-                    <div><Link prefetch={false} href={`${DOMAIN}/categories/${category?.slug}?page=${currentPage}`}>{category.name}</Link></div>
-                </div>
-
-
-
-                <div className="flex justify-center gap-10 flex-wrap">
-                    {mangas?.map((manga, index) => (
-                        <div className="hover:scale-110 transition-transform rounded shadow text-center w-[200px] bg-[#091e25]" key={index}>
-                            <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}`}>
-                                <img src={manga?.photo} alt={`${manga?.name} Cover`} className="mb-2 h-[220px] w-[200px] object-cover" />
-                                <div className='p-3'>
-                                    <h3 className={`${roboto.className} text-[14px] mb-1 text-wrap break-words`}>{manga?.name}</h3>
-                                    <p className="text-[12px] mb-1">{`Total Chapters:  ${manga?.totalChapters ?? 0}`}</p>
-                                </div>
-                            </Link>
-                        </div>
-                    ))}
-                </div>
-
-
-                <div className='flex justify-center items-center my-10' id='pagination'>
-                    {pageNumbers.map((pageNum, index) => (
-                        <Link prefetch={false} key={index} href={`${DOMAIN}/categories/${slug}?page=${pageNum}`} className={`mx-2 px-4 py-2 rounded-lg ${currentPage === pageNum ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300'}`}
-                            onClick={() => { if (typeof pageNum === 'number') { handlePageChange(pageNum); } }}>
-                            {pageNum}
-                        </Link>
-                    ))}
-                </div>
-
-
-            </div>
-
-
+                </article>
+            </main>
             <Footer />
         </>
     );

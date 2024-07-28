@@ -47,13 +47,14 @@ import { getMangasHomePage, getHomePageMangaPerCategory, GetLatestMangas } from 
 import { getLatestMangaChapters } from '@/actions/chapter';
 import { getCategories } from '@/actions/category';
 import { FaArrowAltCircleRight } from "react-icons/fa";
+import Head from 'next/head';
 import Link from "next/link";
 import { DOMAIN, APP_NAME } from "@/config";
 const roboto = Rubik({ subsets: ['latin'], weight: '800', });
 const roboto2 = Rubik({ subsets: ['latin'], weight: '400', });
 const roboto3 = Rubik({ subsets: ['latin'], weight: '600', });
 register();
-
+import { useRouter } from 'next/router';
 
 export default function Home({ mangas, mangapercategory, categories, latestmangas, latestmangachapters }) {
 
@@ -73,18 +74,106 @@ export default function Home({ mangas, mangapercategory, categories, latestmanga
     return uniqueMangas;
   };
 
+  const router = useRouter();
+  const [query, setQuery] = useState('');
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    router.push(`/search?manganame=${query}`);
+  };
+
+  const DESCRIPTION = `Manga Chimp is your go-to destination for exploring and enjoying a vast collection of manga, manhwas, manhuas etc. Discover the latest releases, read your favorite series for free, and dive into an immersive manga experience with high-quality images and personalized recommendations.`
+
+  const schema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": `${DOMAIN}/#person`,
+        "name": `${APP_NAME}`,
+        // "sameAs": ["https://twitter.com/ozulscans"],
+        "image": {
+          "@type": "ImageObject",
+          "@id": `${DOMAIN}/#logo`,
+          // "url": "https://kingofshojo.com/wp-content/uploads/2024/03/adawewtyy-1.png",
+          // "contentUrl": "https://kingofshojo.com/wp-content/uploads/2024/03/adawewtyy-1.png",
+          "caption": `${APP_NAME}`,
+          "inLanguage": "en-US",
+          // "width": "512",
+          // "height": "534"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${DOMAIN}/#website`,
+        "url": `${DOMAIN}`,
+        "name": `${APP_NAME}`,
+        "publisher": { "@id": `${DOMAIN}/#person` },
+        "inLanguage": "en-US",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": `${DOMAIN}/search?manganame={search_term_string}`,
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@type": "CollectionPage",
+        "@id": `${DOMAIN}/#webpage`,
+        "url": `${DOMAIN}`,
+        "name": `${APP_NAME}: The Ultimate Destination For Reading Mangas`,
+        "about": { "@id": `${DOMAIN}/#person` },
+        "isPartOf": { "@id": `${DOMAIN}/#website` },
+        "inLanguage": "en-US"
+      }
+    ]
+  };
 
 
+  const head = () => (
+    <Head>
+      <title>{`${APP_NAME}: The Ultimate Destination For Reading Manga, Manhwa, Manhua, WebComic, Novels`}</title>
+      <meta name="description" content={DESCRIPTION} />
+      <meta name="robots" content="follow, index, max-snippet:-1, max-video-preview:-1, max-image-preview:large" />
+      <meta name="googlebot" content="noarchive" />
+      <meta name="robots" content="noarchive" />
+      <meta property="og:locale" content="en_US" />
+      <meta property="og:type" content="website" />
+      <link rel="canonical" href={`${DOMAIN}`} />
+      <meta property="og:title" content={`${APP_NAME}: The Ultimate Destination For Reading Manga, Manhwa, Manhua, WebComic, Novels`} />
+      <meta property="og:description" content={DESCRIPTION} />
+      <meta property="og:type" content="webiste" />
+      <meta property="og:url" content={`${DOMAIN}`} />
+      <meta property="og:site_name" content={`${APP_NAME}`} />
+      <meta property="og:image:type" content="image/webp" />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+    </Head >
+  );
 
 
   return (
-    <div>
+    <>
+      {head()}
       <Navbar />
       <br />
 
 
+      <form className="max-w-md mx-auto px-5" onSubmit={handleSubmit}>
+        <label for="default-search" className="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
+        <div className="relative">
+          <div className="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <svg className="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+            </svg>
+          </div>
+          <input autoComplete='off' value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Search for a manga ..." type="search" id="default-search" className="bg-[#0e2834] block w-full p-4 ps-10 text-sm text-white border border-gray-500 rounded-lg focus:ring-blue-500 focus:border-blue-500" required />
+          <button type="submit" className="text-white absolute end-2.5 font-bold bottom-2.5 bg-[#051015] hover:scale-110 transition-transform focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-sm px-4 py-2">Search</button>
+        </div>
+      </form>
 
-      <h1 className={`${roboto.className}  text-[white] tracking-wider font-extrabold text-2xl px-3 text-center mb-10 mt-5`}>
+
+
+
+      <h1 className={`${roboto.className}  text-[white] tracking-wider font-extrabold text-2xl px-3 text-center my-10`}>
         {`${APP_NAME}: Ultimate Destination For Reading Mangas`}
       </h1>
 
@@ -158,9 +247,9 @@ export default function Home({ mangas, mangapercategory, categories, latestmanga
                 <Link href={`${DOMAIN}/manga/${manga?.slug}/chapter-${manga?.latestChapterNumber}`}>
                   <div className='flex gap-2 items-center'>
                     <div>
-                      <p className="text-[10px] font-semibold px-1.5 py-1 rounded bg-[#051015]">{`Chapter ${manga?.latestChapterNumber}`}</p>
+                      <p className="text-[10px] font-semibold px-1.5 py-1 rounded bg-[#051015]">{`Chapter ${manga?.latestChapterNumber ?? 0}`}</p>
                     </div>
-                    <div><p className='text-[9px]'>{manga?.latestChapterDate}</p></div>
+                    <div><p className='text-[9px]'>{`${manga?.latestChapterDate ?? 0}`}</p></div>
                   </div>
                 </Link>
 
@@ -168,9 +257,9 @@ export default function Home({ mangas, mangapercategory, categories, latestmanga
                 <Link href={`${DOMAIN}/manga/${manga?.slug}/chapter-${manga?.secondlatestChapterNumber}`}>
                   <div className='flex gap-2 items-center mt-3'>
                     <div>
-                      <p className="text-[10px] font-semibold px-1.5 py-1 rounded bg-[#051015]">{`Chapter ${manga?.secondlatestChapterNumber}`}</p>
+                      <p className="text-[10px] font-semibold px-1.5 py-1 rounded bg-[#051015]">{`Chapter ${manga?.secondlatestChapterNumber ?? 0}`}</p>
                     </div>
-                    <div><p className='text-[9px]'>{manga?.secondlatestChapterDate}</p></div>
+                    <div><p className='text-[9px]'>{`${manga?.secondlatestChapterDate ?? 0}`}</p></div>
                   </div>
                 </Link>
 
@@ -279,8 +368,25 @@ export default function Home({ mangas, mangapercategory, categories, latestmanga
       </div>
 
 
+
+
+
+      <div className={`${roboto.className} text-2xl text-center mb-10 text-white font-bold tracking-wider mt-10`}>All Categories</div>
+
+      <div className='max-w-[1000px] mx-auto px-5'>
+        <div className='text-white flex gap-10 flex-wrap justify-center items-center'>
+          {categories?.map((category, index) => (
+            <Link key={index} href={`${DOMAIN}/categories/${category.slug}?page=1`} className='bg-[#091e25] px-2.5 py-1.5 font-bold rounded  text-sm hover:scale-110 transition-transform'>
+              {category?.name}
+            </Link>
+          ))}
+        </div>
+      </div>
+
+
+
       <br />
       <Footer />
-    </div>
+    </>
   );
 }
