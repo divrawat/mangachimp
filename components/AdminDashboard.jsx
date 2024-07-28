@@ -75,6 +75,7 @@ const AdminDashboard = ({ children }) => {
                 { pathname: '/admin/chapters/bulk-delete-chapters', icon: <MdEditSquare size={20} />, text: 'Bulk Delete Chapters' },
             ], hasSubItems: true
         },
+        { pathname: '/admin/contact', icon: <MdCategory size={20} />, text: 'Contacts', hasSubItems: false },
 
     ], []);
 

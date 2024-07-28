@@ -270,7 +270,7 @@ const MangaPage = ({ errorcode, manga, chapterArray }) => {
 
                 <div className={`${roboto.className} text-3xl px-2 font-bold tracking-wider text-center md:mt-[100px] mt-10 mb-5 text-white`}>{`Read ${manga?.manga?.name} ${manga?.manga?.type}`}</div>
 
-                <div className='flex justify-center text-[13px] flex-wrap items-center gap-3 mb-10 text-blue-600'>
+                <div className='flex justify-center text-[13px] flex-wrap items-center gap-3 mb-10 text-blue-300'>
 
                     <div className='flex items-center gap-2'>
                         <div><FaHome /></div>

@@ -15,17 +15,15 @@ export default function Navbar() {
         if (ref.current.style.display === 'block') { ref.current.style.display = 'none'; }
         else { ref.current.style.display = 'block'; }
     };
-    // bg-[#091e25]
 
     return (
 
-        <nav className="md:pb-1 md:pt-1  text-[white]  bg-[#020709]">
+        <nav className="md:pb-1 md:pt-1  text-white">
             <div className="container mx-auto md:flex items-center justify-center md:justify-between max-w-[1200px]">
                 <div className="flex items-center md:space-x-4 justify-between">
                     <div className="flex items-center py-1">
                         <div className="px-4"> <img src="/logo.jpg" alt="" height={80} width={80} className="rounded-full" /></div>
-                        <span className=" text-lg tracking-wider text-[19px] font-extrabold md:text-[22px]"><Link className={`${roboto.className}`} href="/">{NavbarName}</Link></span>
-
+                        <span className="uppercase text-lg tracking-wider text-[19px] font-extrabold md:text-[22px]"><Link className={`${roboto.className}`} href="/">{NavbarName}</Link></span>
                     </div>
                     <div className="flex gap-5 items-center">
                         <span onClick={() => toggle(menuRef)} className="md:hidden text-[22px] font-extrabold mr-4">☰</span>

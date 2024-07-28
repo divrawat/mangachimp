@@ -131,3 +131,25 @@ export const BulkAddChapters = async (data, token) => {
         throw new Error('Failed to delete chapters');
     }
 };
+
+
+
+
+
+
+
+
+export const getLatestMangaChapters = async () => {
+    try {
+        const response = await fetch(`${BACKEND_DOMAIN}/api/chapters/get-most-recent-chapters`, {
+            method: 'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+            },
+        });
+        return await response.json();
+    } catch (err) {
+        console.log(err);
+    }
+}

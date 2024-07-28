@@ -152,7 +152,7 @@ const Category = ({ errorCode, category, mangas, query, totalCount }) => {
         router.push(`${DOMAIN}/categories/${slug}?page=${page}`);
     };
 
-    const totalPages = Math.ceil(totalCount / 18);
+    const totalPages = Math.ceil(totalCount / 30);
     const maxPagesToShow = 5;
     const pageNumbers = [];
 
@@ -187,7 +187,7 @@ const Category = ({ errorCode, category, mangas, query, totalCount }) => {
                 <h1 className={`${roboto.className}  text-3xl font-semibold mb-5 text-center`}>{category.name}</h1>
                 <p className='text-center mb-5'>{`Total Results: ${totalCount}`}</p>
 
-                <div className='flex text-[13px] flex-wrap justify-center items-center gap-2 mb-10 text-blue-600'>
+                <div className='flex text-[13px] flex-wrap justify-center items-center gap-2 mb-10 text-blue-300'>
 
                     <div className='flex items-center gap-2'>
                         <div><FaHome /></div>
@@ -199,14 +199,16 @@ const Category = ({ errorCode, category, mangas, query, totalCount }) => {
                     <div><Link prefetch={false} href={`${DOMAIN}/categories/${category?.slug}?page=${currentPage}`}>{category.name}</Link></div>
                 </div>
 
+
+
                 <div className="flex justify-center gap-10 flex-wrap">
                     {mangas?.map((manga, index) => (
                         <div className="hover:scale-110 transition-transform rounded shadow text-center w-[200px] bg-[#091e25]" key={index}>
                             <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}`}>
                                 <img src={manga?.photo} alt={`${manga?.name} Cover`} className="mb-2 h-[220px] w-[200px] object-cover" />
-                                <div className='px-5 py-3 '>
-                                    <h3 className={`${roboto.className} text-[15px] mb-1 text-wrap break-words`}>{manga?.name}</h3>
-                                    <p className="text-[13px] mb-1">{`Total Chapters:  ${manga?.totalChapters ?? 0}`}</p>
+                                <div className='p-3'>
+                                    <h3 className={`${roboto.className} text-[14px] mb-1 text-wrap break-words`}>{manga?.name}</h3>
+                                    <p className="text-[12px] mb-1">{`Total Chapters:  ${manga?.totalChapters ?? 0}`}</p>
                                 </div>
                             </Link>
                         </div>
