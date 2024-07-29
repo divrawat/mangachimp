@@ -19,7 +19,7 @@ export default function Footer() {
                 <div className="container mx-auto md:flex flex-wrap justify-between items-center">
                     <div className="md:flex items-center text-center">
                         <p className={`${roboto.className} text-[16px] font-bold p-3 uppercase`}>
-                            <Link href={`${DOMAIN}`}>   {`© ${currentYear} @ ${NavbarName}`}</Link>
+                            <Link prefetch={false} href={`${DOMAIN}`}>   {`© ${currentYear} @ ${NavbarName}`}</Link>
                         </p>
                     </div>
                     <ul className="md:flex md:space-x-7 text-center leading-[2.5] p-3 font-bold">

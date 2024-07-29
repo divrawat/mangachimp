@@ -162,11 +162,11 @@ export default function Home({ latestmangachapters }) {
                                 <div key={index} className="bg-[#091e25] overflow-hidden shadow rounded-b w-[210px] flex flex-col">
                                     <Link href={`${DOMAIN}/manga/${manga?.slug}`}> <img className='w-[210px] h-[250px] object-cover' src={manga?.photo} alt={manga?.manganame} /></Link>
                                     <div className="px-4 py-5">
-                                        <Link href={`${DOMAIN}/manga/${manga?.slug}`}>
+                                        <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}`}>
                                             <div className={`${roboto3.className} text-[15px] font-bold w-[200px] pb-3`}>{manga?.mangaName}</div>
                                         </Link>
 
-                                        <Link href={`${DOMAIN}/manga/${manga?.slug}/chapter-${manga?.latestChapterNumber}`}>
+                                        <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}/chapter-${manga?.latestChapterNumber}`}>
                                             <div className='flex gap-2 items-center'>
                                                 <div>
                                                     <p className="text-[10px] font-semibold px-1.5 py-1 rounded bg-[#051015]">{`Chapter ${manga?.latestChapterNumber}`}</p>
@@ -176,7 +176,7 @@ export default function Home({ latestmangachapters }) {
                                         </Link>
 
 
-                                        <Link href={`${DOMAIN}/manga/${manga?.slug}/chapter-${manga?.secondlatestChapterNumber}`}>
+                                        <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}/chapter-${manga?.secondlatestChapterNumber}`}>
                                             <div className='flex gap-2 items-center mt-3'>
                                                 <div>
                                                     <p className="text-[10px] font-semibold px-1.5 py-1 rounded bg-[#051015]">{`Chapter ${manga?.secondlatestChapterNumber}`}</p>

@@ -35,7 +35,7 @@ const SearchedPage = () => {
                 <div className="flex gap-12 flex-wrap justify-center">
                     {mangas && mangas.length > 0 ? (
                         mangas.map((manga, index) => (
-                            <Link
+                            <Link prefetch={false}
                                 href={`${DOMAIN}/manga/${manga?.slug}`}
                                 key={index}
                                 className="bg-[#091e25] overflow-hidden shadow rounded-b w-[190px] flex flex-col hover:scale-110 transition-transform"

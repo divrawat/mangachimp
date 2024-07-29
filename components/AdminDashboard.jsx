@@ -151,7 +151,7 @@ const AdminDashboard = ({ children }) => {
                                         <div className={`pr-6 ${activeItem.includes(index) ? 'transform rotate-180 pl-6' : ''}`}>{link.arrow}</div>
                                     </div>
                                 ) : (
-                                    <Link href={link.pathname} className={`${pathname === link.pathname ? 'bg-[black] text-[white] font-semibold' : ''} hover:bg-[#161638] hover:font-semibold flex items-center justify-between pl-6 py-2 pb-2 mt-2 cursor-pointer`}>
+                                    <Link prefetch={false} href={link.pathname} className={`${pathname === link.pathname ? 'bg-[black] text-[white] font-semibold' : ''} hover:bg-[#161638] hover:font-semibold flex items-center justify-between pl-6 py-2 pb-2 mt-2 cursor-pointer`}>
 
                                         <div className="flex items-center gap-4">
                                             <div>{link.icon}</div>
@@ -164,7 +164,7 @@ const AdminDashboard = ({ children }) => {
                                 {activeItem.includes(index) && link.subItems && (
                                     <div className="bg-[black] py-2">
                                         {link.subItems.map((subItem, subIndex) => (
-                                            <Link key={subIndex} href={subItem.pathname} className={`${pathname === subItem.pathname ? 'bg-[#161638] text-[white] font-semibold' : ''} hover:bg-[#161638] hover:font-semibold flex items-center gap-3 pl-[30px] py-2 mb-3 cursor-pointer`}>
+                                            <Link prefetch={false} key={subIndex} href={subItem.pathname} className={`${pathname === subItem.pathname ? 'bg-[#161638] text-[white] font-semibold' : ''} hover:bg-[#161638] hover:font-semibold flex items-center gap-3 pl-[30px] py-2 mb-3 cursor-pointer`}>
 
                                                 <div>{subItem.icon}</div>
                                                 <div>{subItem.text}</div>
