@@ -2,13 +2,15 @@
 export async function getStaticProps() {
   try {
     const page = 1;
-    const [data, mangapercategory, categories, latestmangas, latestmangachapters] = await Promise.all([
-      getMangasHomePage(),
-      getHomePageMangaPerCategory(),
-      getCategories(),
-      GetLatestMangas(page),
-      getLatestMangaChapters(),
-    ]);
+    const [data,
+      // mangapercategory,
+      categories, latestmangas, latestmangachapters] = await Promise.all([
+        getMangasHomePage(),
+        // getHomePageMangaPerCategory(),
+        getCategories(),
+        GetLatestMangas(page),
+        getLatestMangaChapters(),
+      ]);
 
     if (data.error) {
       return { props: { errorCode: 404 } };
@@ -18,7 +20,7 @@ export async function getStaticProps() {
     return {
       props: {
         mangas: data?.data || [],
-        mangapercategory: mangapercategory,
+        // mangapercategory: mangapercategory,
         categories: categories?.categories || [],
         latestmangas: latestmangas.mangas,
         latestmangachapters: latestmangachapters,
@@ -50,7 +52,7 @@ import { getCategories } from '@/actions/category';
 import { FaArrowAltCircleRight } from "react-icons/fa";
 import Head from 'next/head';
 import Link from "next/link";
-import { DOMAIN, APP_NAME, NOT_FOUND_IMAGE } from "@/config";
+import { DOMAIN, APP_NAME } from "@/config";
 
 const roboto = Rubik({ subsets: ['latin'], weight: '800', });
 const roboto2 = Rubik({ subsets: ['latin'], weight: '400', });
@@ -58,11 +60,12 @@ const roboto3 = Rubik({ subsets: ['latin'], weight: '600', });
 register();
 import { useRouter } from 'next/router';
 
-export default function Home({ mangas, mangapercategory, categories, latestmangas, latestmangachapters }) {
+export default function Home({ mangas, categories, latestmangas, latestmangachapters }) {
 
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const handleChangeCategory = (category) => { setSelectedCategory(category); };
+  // const [selectedCategory, setSelectedCategory] = useState('');
+  // const handleChangeCategory = (category) => { setSelectedCategory(category); };
 
+  /*
   const getMangasToDisplay = () => {
     let mangasToDisplay = [];
     if (selectedCategory === '') { mangasToDisplay = Object.values(mangapercategory).flat(); }
@@ -75,6 +78,7 @@ export default function Home({ mangas, mangapercategory, categories, latestmanga
     });
     return uniqueMangas;
   };
+  */
 
   const router = useRouter();
   const [query, setQuery] = useState('');
@@ -322,7 +326,7 @@ export default function Home({ mangas, mangapercategory, categories, latestmanga
 
 
 
-      <div className='max-w-[1262px] mx-auto pt-8'>
+      {/* <div className='max-w-[1262px] mx-auto pt-8'>
         <div className='flex gap-3 justify-center md:mt-[80px] mt-5 bg-[#07161a] flex-wrap py-5 px-2 md:py-0 md:px-0 rounded'>
           <div
             onClick={() => handleChangeCategory('')}
@@ -336,13 +340,13 @@ export default function Home({ mangas, mangapercategory, categories, latestmanga
             </p>
           ))}
         </div>
-      </div>
+      </div> */}
 
-      <h2 className={`${roboto.className} text-2xl tracking-wider font-extrabold my-6 text-center uppercase text-white`}>
+      {/* <h2 className={`${roboto.className} text-2xl tracking-wider font-extrabold my-6 text-center uppercase text-white`}>
         {selectedCategory === '' ? 'All Mangas' : selectedCategory}
-      </h2>
+      </h2> */}
 
-      <div className="max-w-[1300px] mx-auto px-2 sm:px-6 lg:px-8 py-4 text-white">
+      {/* <div className="max-w-[1300px] mx-auto px-2 sm:px-6 lg:px-8 py-4 text-white">
         <div className="flex sm:gap-12 gap-3 flex-wrap justify-center">
           {getMangasToDisplay().map((manga, index) => (
             <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}`} key={index} className="bg-[#091e25] overflow-hidden shadow rounded-b sm:w-[190px] w-[140px] flex flex-col hover:scale-110 transition-transform">
@@ -354,7 +358,7 @@ export default function Home({ mangas, mangapercategory, categories, latestmanga
             </Link>
           ))}
         </div>
-      </div>
+      </div> */}
 
 
 
