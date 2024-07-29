@@ -118,7 +118,7 @@ export default function Home({ latestmangachapters }) {
             <meta property="og:title" content={`${APP_NAME}: New Chapters`} />
             <meta property="og:description" content={DESCRIPTION} />
             <meta property="og:type" content="webiste" />
-            <meta property="og:url" content={`${DOMAIN}`} />
+            <meta property="og:url" content={`${DOMAIN}/new-chapters`} />
             <meta property="og:site_name" content={`${APP_NAME}`} />
             <meta property="og:image:type" content="image/webp" />
             <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
@@ -157,21 +157,21 @@ export default function Home({ latestmangachapters }) {
 
 
                     <div className="max-w-[1400px] mx-auto px-2 sm:px-6 lg:px-8 py-4 text-white">
-                        <div className="flex gap-12 flex-wrap justify-center">
+                        <div className="flex sm:gap-12 gap-3 flex-wrap justify-center">
                             {latestmangachapters?.map((manga, index) => (
-                                <div key={index} className="bg-[#091e25] overflow-hidden shadow rounded-b w-[210px] flex flex-col">
-                                    <Link href={`${DOMAIN}/manga/${manga?.slug}`}> <img className='w-[210px] h-[250px] object-cover' src={manga?.photo} alt={manga?.manganame} /></Link>
+                                <div key={index} className="bg-[#091e25] overflow-hidden shadow rounded-b sm:w-[210px] w-[140px] flex flex-col">
+                                    <Link href={`${DOMAIN}/manga/${manga?.slug}`}> <img className='sm:w-[210px] sm:h-[250px] object-cover w-[140px] h-[160px]' src={manga?.photo} alt={manga?.manganame} /></Link>
                                     <div className="px-4 py-5">
                                         <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}`}>
-                                            <div className={`${roboto3.className} text-[15px] font-bold w-[200px] pb-3`}>{manga?.mangaName}</div>
+                                            <p className={`${roboto3.className} sm:text-[15px] text-[12px] font-bold sm:w-[200px] pb-3`}>{manga?.mangaName}</p>
                                         </Link>
 
                                         <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}/chapter-${manga?.latestChapterNumber}`}>
                                             <div className='flex gap-2 items-center'>
                                                 <div>
-                                                    <p className="text-[10px] font-semibold px-1.5 py-1 rounded bg-[#051015]">{`Chapter ${manga?.latestChapterNumber}`}</p>
+                                                    <p className="sm:text-[10px] text-[8px] font-semibold px-1.5 py-1 rounded bg-[#051015]">{`Chapter ${manga?.latestChapterNumber}`}</p>
                                                 </div>
-                                                <div><p className='text-[9px]'>{manga?.latestChapterDate}</p></div>
+                                                <div><p className='sm:text-[9px] text-[7px]'>{manga?.latestChapterDate}</p></div>
                                             </div>
                                         </Link>
 
@@ -179,9 +179,9 @@ export default function Home({ latestmangachapters }) {
                                         <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}/chapter-${manga?.secondlatestChapterNumber}`}>
                                             <div className='flex gap-2 items-center mt-3'>
                                                 <div>
-                                                    <p className="text-[10px] font-semibold px-1.5 py-1 rounded bg-[#051015]">{`Chapter ${manga?.secondlatestChapterNumber}`}</p>
+                                                    <p className="sm:text-[10px] text-[8px] font-semibold px-1.5 py-1 rounded bg-[#051015]">{`Chapter ${manga?.secondlatestChapterNumber}`}</p>
                                                 </div>
-                                                <div><p className='text-[9px]'>{manga?.secondlatestChapterDate}</p></div>
+                                                <div><p className='sm:text-[9px] text-[7px]'>{manga?.secondlatestChapterDate}</p></div>
                                             </div>
                                         </Link>
 

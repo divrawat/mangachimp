@@ -19,12 +19,11 @@ body{
 
 
 
+
 .allimages{
   display: flex;
   justify-content: center;
 }
-
-
 
 
 :root {

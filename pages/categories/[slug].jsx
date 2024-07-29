@@ -19,19 +19,16 @@ export async function getServerSideProps({ query, res }) {
 
 import Head from 'next/head';
 import { singleCategory } from '@/actions/category';
-import { DOMAIN, APP_NAME } from '@/config';
+import { DOMAIN, APP_NAME, NOT_FOUND_IMAGE } from '@/config';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { FaHome } from "react-icons/fa";
-import { MdCategory } from "react-icons/md";
 import { Rubik } from '@next/font/google';
-const roboto = Rubik({
-    subsets: ['latin'],
-    weight: '700',
-});
+const roboto = Rubik({ subsets: ['latin'], weight: '800' });
+const roboto2 = Rubik({ subsets: ['latin'], weight: '700' });
 
 const Category = ({ errorCode, category, mangas, query, totalCount }) => {
 
@@ -39,12 +36,11 @@ const Category = ({ errorCode, category, mangas, query, totalCount }) => {
         return (
             <>
                 <Navbar />
-                <div>
-                    <br />
-                    <div className="flex justify-center items-center h-[70vh]">
-                        <img src="/404.jpg" className="max-w-full max-h-full rounded-full" alt="" />
+                <div className="text-center text-white">
+                    <h1 className="text-3xl font-bold mt-5 mb-8">404 Page Not Found</h1>
+                    <div className="flex justify-center items-center px-5">
+                        <img height={350} width={350} src={`${NOT_FOUND_IMAGE}`} className="rounded-full" />
                     </div>
-                    <div className=' text-center font-bold text-5xl mb-10 text-white my-5'>Page Not Found</div>
                 </div>
                 <Footer />
             </>
@@ -185,12 +181,10 @@ const Category = ({ errorCode, category, mangas, query, totalCount }) => {
             <Navbar />
             <main>
                 <article>
-                    <div className='my-5 max-w-[1350px] mx-auto p-3 text-white'>
+                    <div className=' max-w-[1350px] mx-auto p-3 text-white'>
 
-                        <h1 className={`${roboto.className}  text-3xl font-semibold mb-5 text-center`}>{category.name}</h1>
-                        <p className='text-center mb-5'>{`Total Results: ${totalCount}`}</p>
-
-                        <div className='flex text-[13px] flex-wrap justify-center items-center gap-2 mb-10 text-blue-300'>
+                        <h1 className={`${roboto.className}  text-3xl font-semibold mb-3 text-center`}>{category.name}</h1>
+                        <div className='flex text-[13px] flex-wrap justify-center items-center gap-2 mb-3 text-blue-300'>
 
                             <div className='flex items-center gap-2'>
                                 <div><FaHome /></div>
@@ -202,16 +196,19 @@ const Category = ({ errorCode, category, mangas, query, totalCount }) => {
                             <div><Link prefetch={false} href={`${DOMAIN}/categories/${category?.slug}?page=${currentPage}`}>{category.name}</Link></div>
                         </div>
 
+                        <p className='text-center mb-3 font-bold'>{`Total Results: ${totalCount}`}</p>
+                        <p className='text-center font-bold mb-8'>{`Page ${currentPage}`}</p>
 
 
-                        <div className="flex justify-center gap-10 flex-wrap">
+                        <div className="flex justify-center sm:gap-10 gap-3 flex-wrap">
                             {mangas?.map((manga, index) => (
-                                <div className="hover:scale-110 transition-transform rounded shadow text-center w-[200px] bg-[#091e25]" key={index}>
+                                <div className="hover:scale-110 transition-transform rounded shadow sm:w-[200px] w-[140px] bg-[#091e25]" key={index}>
                                     <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}`}>
-                                        <img src={manga?.photo} alt={`${manga?.name} Cover`} className="mb-2 h-[220px] w-[200px] object-cover" />
+                                        <img src={manga?.photo} alt={`${manga?.name} Cover`}
+                                            className="mb-2 h-[160px] sm:h-[200px] sm:w-[200px] w-[140px] object-cover" />
                                         <div className='p-3'>
-                                            <h3 className={`${roboto.className} text-[14px] mb-1 text-wrap break-words`}>{manga?.name}</h3>
-                                            <p className="text-[12px] mb-1">{`Total Chapters:  ${manga?.totalChapters ?? 0}`}</p>
+                                            <p className="sm:text-[12px] text-[10px] mb-1">{`Total Chapters:  ${manga?.totalChapters ?? 0}`}</p>
+                                            <p className={`${roboto2.className} sm:text-[14px] text-[12px]  mb-1 text-wrap break-words`}>{manga?.name}</p>
                                         </div>
                                     </Link>
                                 </div>
@@ -219,9 +216,11 @@ const Category = ({ errorCode, category, mangas, query, totalCount }) => {
                         </div>
 
 
-                        <div className='flex justify-center items-center my-10' id='pagination'>
-                            {pageNumbers.map((pageNum, index) => (
-                                <Link prefetch={false} key={index} href={`${DOMAIN}/categories/${slug}?page=${pageNum}`} className={`mx-2 px-4 py-2 rounded-lg ${currentPage === pageNum ? 'bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300'}`}
+
+                        <div className='flex justify-center flex-wrap items-center my-10 mx-4 gap-5' id='pagination'>
+                            {pageNumbers?.map((pageNum, index) => (
+                                <Link prefetch={false} key={index} href={`${DOMAIN}/categories/${slug}?page=${pageNum}`}
+                                    className={`${roboto2.className} mx-2 px-4 py-2 rounded-lg ${currentPage === pageNum ? 'bg-[#0f2a33] text-white' : 'bg-[white] hover:bg-[#0f2a33] hover:text-white text-[black]'}`}
                                     onClick={() => { if (typeof pageNum === 'number') { handlePageChange(pageNum); } }}>
                                     {pageNum}
                                 </Link>

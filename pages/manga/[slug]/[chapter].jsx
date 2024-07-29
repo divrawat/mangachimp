@@ -71,7 +71,7 @@ export async function getStaticProps({ params }) {
 import { getParticularMangachapterwithRelated } from "@/actions/chapter";
 import Head from "next/head";
 import Link from "next/link";
-import { APP_NAME, DOMAIN, IMAGES_SUBDOMAIN } from "@/config";
+import { APP_NAME, DOMAIN, IMAGES_SUBDOMAIN, NOT_FOUND_IMAGE } from "@/config";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { Rubik } from '@next/font/google';
@@ -79,12 +79,11 @@ import { FaHome } from "react-icons/fa";
 import { GiBlackBook } from "react-icons/gi";
 import { useRouter } from 'next/router';
 import { useState, useEffect } from "react";
-import { FaArrowRightLong } from "react-icons/fa6";
 import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from "react-icons/fa";
-import { FaGripLines } from "react-icons/fa";
 import { AiFillChrome } from "react-icons/ai";
 const roboto = Rubik({ subsets: ['latin'], weight: '800', });
-// const roboto2 = Rubik({ subsets: ['latin'], weight: '700', });
+import DisqusComments from '@/components/DisQus';
+
 
 
 
@@ -98,9 +97,11 @@ export default function Chapter({ errorcode, manga, chapterArray, relatedMangas,
             <>
                 {head()}
                 <Navbar />
-                <div className="text-center py-10">
-                    <h1 className="text-3xl font-bold mt-10">404 Page Not Found</h1>
-                    <p className="text-lg mt-4">The page you are looking for does not exist.</p>
+                <div className="text-center text-white">
+                    <h1 className="text-3xl font-bold mt-5 mb-8">404 Page Not Found</h1>
+                    <div className="flex justify-center items-center px-5">
+                        <img height={350} width={350} src={`${NOT_FOUND_IMAGE}`} className="rounded-full" />
+                    </div>
                 </div>
                 <Footer />
             </>
@@ -394,25 +395,30 @@ export default function Chapter({ errorcode, manga, chapterArray, relatedMangas,
                     ))}
 
 
-                    <div className='max-w-[800px] mx-auto mt-10'>
-                        {paragraphs?.map((paragraph, index) => (
-                            <p key={index} className=' py-6 tracking-wider leading-7 text-[15px]'>{paragraph}</p>
-                        ))}
+
+
+
+                    <div className='py-10 bg-[#051015]'>
+                        <h2 className='text-4xl text-center text-[white] font-blod px-4 mb-10'>Comment Section</h2>
+                        <section className='max-w-[1000px] mx-auto px-5'>
+                            <DisqusComments url={`/manga/${manga?.slug}/chapter-${chapterData?.chapterNumber}`} identifier={`${DOMAIN}/manga/${manga?.slug}/chapter-${chapterData?.chapterNumber}`} title={`${manga?.name} Chapter ${chapterData?.chapterNumber}`} />
+                        </section>
                     </div>
+
 
 
                     <div className="max-w-[1300px] mx-auto mt-10">
 
                         <h2 className={`${roboto.className} text-center text-white text-3xl font-bold pb-10`}>Related</h2>
 
-                        <div className="flex justify-center gap-10 flex-wrap pb-10 px-5">
+                        <div className="flex justify-center sm:gap-10 gap-3 flex-wrap pb-10 px-3">
                             {relatedMangas?.map((manga, index) => (
-                                <div className="hover:scale-110 transition-transform text-white rounded shadow w-[200px] bg-[#051015]" key={index}>
+                                <div className="hover:scale-110 transition-transform text-white rounded shadow sm:w-[200px] w-[140px] bg-[#051015]" key={index}>
                                     <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}`}>
-                                        <img src={manga?.photo} alt={`${manga?.name} Cover`} className="mb-2 h-[230px] w-[200px] object-cover" />
-                                        <div className='px-5 py-3'>
-                                            <p className="text-[13.5px] font-bold mb-1 text-wrap break-words">{manga?.name}</p>
-                                            <p className="text-[11.5px] mb-1">{` Total Chapters:  ${manga?.chapterCount}`}</p>
+                                        <img src={manga?.photo} alt={`${manga?.name} Cover`} className="mb-2 sm:h-[230px] sm:w-[200px] w-[140px] h-[160px] object-cover" />
+                                        <div className='sm:px-5 px-3 py-3'>
+                                            <p className="sm:text-[11.5px] text-[9px] mb-1 font-bold">{` Total Chapters:  ${manga?.chapterCount}`}</p>
+                                            <p className="sm:text-[13.5px] text-[11px] font-bold mb-1 text-wrap break-words">{manga?.name}</p>
                                         </div>
                                     </Link>
                                 </div>
@@ -420,7 +426,15 @@ export default function Chapter({ errorcode, manga, chapterArray, relatedMangas,
                         </div>
                     </div>
 
+
                 </article>
+
+                <div className='max-w-[800px] mx-auto mt-10'>
+                    {paragraphs?.map((paragraph, index) => (
+                        <p key={index} className=' py-6 tracking-wider leading-7 text-[15px]'>{paragraph}</p>
+                    ))}
+                </div>
+
             </main>
             <Footer />
         </>

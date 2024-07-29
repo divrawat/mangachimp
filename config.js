@@ -8,6 +8,7 @@ export const BACKEND_DOMAIN = 'https://backend-mangawebsite.vercel.app'
 
 
 export const IMAGES_SUBDOMAIN = "https://images.onepiecemanga.in.net";
+export const DISQUS_SHORTNAME = "my-cms-7";
 
 
 
@@ -16,6 +17,9 @@ export const APP_DESCRIPTION = `Read manhwa or manga all chapters online.`;
 
 export const APP_NAME = 'Manga Chimp';
 export const NavbarName = "Manga Chimp";
+
+export const APP_LOGO = `${IMAGES_SUBDOMAIN}/public/logo.webp`;
+export const NOT_FOUND_IMAGE = `${IMAGES_SUBDOMAIN}/public/404.webp`;
 
 export const navLinks = [
     { text: 'New Chapters', href: `${DOMAIN}/new-chapters` },

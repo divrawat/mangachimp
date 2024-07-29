@@ -1,11 +1,9 @@
 import Link from "next/link";
 import React, { useRef } from 'react';
-import { NavbarName, navLinks } from "@/config";
+import { APP_NAME, NavbarName, navLinks } from "@/config";
 import { Rubik } from '@next/font/google';
-const roboto = Rubik({
-    subsets: ['latin'],
-    weight: '800',
-});
+import { APP_LOGO } from "@/config";
+const roboto = Rubik({ subsets: ['latin'], weight: '800' });
 
 export default function Navbar() {
 
@@ -22,7 +20,7 @@ export default function Navbar() {
             <div className="container mx-auto md:flex items-center justify-center md:justify-between max-w-[1200px]">
                 <div className="flex items-center md:space-x-4 justify-between">
                     <div className="flex items-center py-1">
-                        <div className="px-4"> <img src="/logo.jpg" alt="" height={80} width={80} className="rounded-full" /></div>
+                        <div className="px-4"> <img src={APP_LOGO} alt={`${APP_NAME} logo`} height={80} width={80} className="rounded-full" /></div>
                         <span className="uppercase text-lg tracking-wider text-[19px] font-extrabold md:text-[22px]"><Link prefetch={false} className={`${roboto.className}`} href="/">{NavbarName}</Link></span>
                     </div>
                     <div className="flex gap-5 items-center">
