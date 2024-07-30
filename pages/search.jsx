@@ -34,21 +34,21 @@ const SearchedPage = () => {
             </h1>
 
             <div className="max-w-[1300px] mx-auto px-2 sm:px-6 lg:px-8 py-4 text-white">
-                <div className="flex gap-12 flex-wrap justify-center">
+                <div className="flex sm:gap-12 gap-3 flex-wrap justify-center">
                     {loading ? (
-                        <div className="flex justify-center items-center w-full text-center text-gray-400">
+                        <div className="flex justify-center items-center w-full text-center">
                             <p>Loading...</p>
                         </div>
                     ) : (
                         mangas && mangas.length > 0 ? (
                             mangas.map((manga, index) => (
-                                <Link prefetch={false} key={index} href={`${DOMAIN}/manga/${manga?.slug}`} className="bg-[#091e25] overflow-hidden shadow rounded-b w-[190px] flex flex-col hover:scale-110 transition-transform">
-                                    <img className='w-[190px] h-[220px] object-cover' src={manga?.photo} alt={manga?.name} />
+                                <Link prefetch={false} key={index} href={`${DOMAIN}/manga/${manga?.slug}`} className="bg-[#091e25] overflow-hidden shadow rounded-b sm:w-[190px] w-[45%] flex flex-col hover:scale-110 transition-transform">
+                                    <img className='sm:w-[190px] sm:h-[220px] w-full object-cover' src={manga?.photo} alt={manga?.name} />
                                     <div className="px-4 py-5">
-                                        <p className="text-[12px] pb-1.5">{`Total Chapters: ${manga?.totalChapters ?? 0}`}</p>
-                                        <div style={{ height: '40px', overflow: 'hidden', textOverflow: 'ellipsis' }} className="text-[14px] font-bold w-[185px]">
+                                        <p className="sm:text-[12px] text-[9px] pb-1.5 font-bold">{`Total Chapters: ${manga?.totalChapters ?? 0}`}</p>
+                                        <p className="sm:text-[14px] text-[11px] font-bold sm:w-[185px]">
                                             {manga?.name}
-                                        </div>
+                                        </p>
                                     </div>
                                 </Link>
                             ))

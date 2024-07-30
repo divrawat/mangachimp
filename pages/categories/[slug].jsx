@@ -4,6 +4,11 @@ export async function getServerSideProps({ query, res }) {
         const { slug, page } = query;
         const data = await singleCategory(slug, page);
 
+        res.setHeader(
+            'Cache-Control',
+            'public, s-maxage=10800, stale-while-revalidate=59'
+        );
+
         if (data.error) {
             return { props: { errorCode: 404 } };
         } else {

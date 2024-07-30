@@ -1,20 +1,25 @@
-
 export async function getServerSideProps({ query, res }) {
     try {
         const { page } = query;
         const data = await GetLatestMangas(page);
 
+        res.setHeader(
+            'Cache-Control',
+            'public, s-maxage=10800, stale-while-revalidate=59'
+        );
+
         if (data.error) {
             return { props: { errorCode: 404 } };
-        } else {
-            return { props: { latestmangas: data.mangas, totalCount: data.totalCount } };
         }
+
+        return { props: { latestmangas: data.mangas, totalCount: data.totalCount } };
 
     } catch (error) {
         console.error(error);
         return { props: { errorCode: 500 } };
     }
 }
+
 
 
 import Head from 'next/head';
@@ -201,9 +206,9 @@ const NewMangas = ({ latestmangas, errorCode, totalCount, category }) => {
 
                         <div className="flex justify-center sm:gap-10 gap-3 flex-wrap">
                             {latestmangas?.map((manga, index) => (
-                                <div className="hover:scale-110 transition-transform rounded shadow sm:w-[200px] w-[140px] bg-[#091e25]" key={index}>
+                                <div className="hover:scale-110 transition-transform rounded shadow sm:w-[200px] w-[45%] bg-[#091e25]" key={index}>
                                     <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}`}>
-                                        <img src={manga?.photo} alt={`${manga?.name} Cover`} className="mb-2 sm:h-[220px] sm:w-[200px] w-[140px] h-[160px] object-cover" />
+                                        <img src={manga?.photo} alt={`${manga?.name} Cover`} className="mb-2 sm:h-[220px] sm:w-[200px] w-[full]  object-cover" />
                                         <div className='p-3'>
                                             <p className="sm:text-[12px] text-[10px] mb-1.5">{`Total Chapters:  ${manga?.totalChapters ?? 0}`}</p>
                                             <p className={`${roboto.className} sm:text-[14px] text-[12px] mb-1 text-wrap break-words`}>{manga?.name}</p>

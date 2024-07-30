@@ -1,4 +1,4 @@
-
+/*
 export async function getServerSideProps({ params }) {
 
     const response = await getParticularMangachapterwithRelated(params.slug, params.chapter);
@@ -21,10 +21,10 @@ export async function getServerSideProps({ params }) {
     const reversedChapterNumbers = sortedchapterNumbers.reverse();
     return { props: { manga: response?.manga, chapterData: response?.chapterData, relatedMangas: response?.relatedMangas, chapterArray: reversedChapterNumbers } }
 }
+*/
 
 
 
-/*
 export async function getStaticPaths() {
     const paths = [{ params: { slug: 'one-piece', chapter: 'chapter-1' } }];
     return { paths, fallback: 'blocking' };
@@ -60,7 +60,7 @@ export async function getStaticProps({ params }) {
         { return { props: { errorcode: true } }; }
     }
 }
-*/
+
 
 
 

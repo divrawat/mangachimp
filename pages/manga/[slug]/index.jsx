@@ -266,17 +266,17 @@ const MangaPage = ({ errorcode, manga, chapterArray }) => {
 
                             <div className="flex justify-center items-center md:gap-[150px] sm:gap-[100px] pb-8 gap-10 flex-wrap mt-14">
                                 <div className="text-center">
-                                    <h3 className="font-bold text-[21px] mb-2">Release</h3>
+                                    <p className="font-bold text-[21px] mb-2">Release</p>
                                     <p>{manga?.manga?.releaseDate}</p>
                                 </div>
 
                                 <div className="text-center">
-                                    <h3 className="font-bold text-[21px] mb-2">Author</h3>
+                                    <p className="font-bold text-[21px] mb-2">Author</p>
                                     <p>{manga?.manga?.author}</p>
                                 </div>
 
                                 <div className="text-center">
-                                    <h3 className="font-bold text-[21px] mb-2">Type</h3>
+                                    <p className="font-bold text-[21px] mb-2">Type</p>
                                     <p>{manga?.manga?.type}</p>
                                 </div>
                             </div>
@@ -335,7 +335,7 @@ const MangaPage = ({ errorcode, manga, chapterArray }) => {
                                     <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}`}>
                                         <img src={manga?.photo} alt={`${manga?.name} Cover`} className="mb-2 sm:h-[200px] sm:w-[180px] h-[160px] w-[140px] object-cover" />
                                         <div className='px-3 py-3'>
-                                            <div className={`${roboto2.className} sm:text-[15px] text-[11px] font-semibold mb-1 text-wrap break-words`}>{manga?.name}</div>
+                                            <p className={`${roboto2.className} sm:text-[15px] text-[11px] font-semibold mb-1 text-wrap break-words`}>{manga?.name}</p>
                                             <p className="sm:text-[13px] text-[9px] my-1 py-1  font-bold">{`Total Chapters:  ${manga?.totalChapters ?? 0}`}</p>
                                         </div>
                                     </Link>

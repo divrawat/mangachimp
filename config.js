@@ -20,6 +20,7 @@ export const NavbarName = "Manga Chimp";
 
 export const APP_LOGO = `${IMAGES_SUBDOMAIN}/public/logo.webp`;
 export const NOT_FOUND_IMAGE = `${IMAGES_SUBDOMAIN}/public/404.webp`;
+export const FAVICON = `${IMAGES_SUBDOMAIN}/public/favicon.png`;
 
 export const navLinks = [
     { text: 'New Chapters', href: `${DOMAIN}/new-chapters` },

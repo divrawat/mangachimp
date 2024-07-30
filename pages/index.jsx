@@ -1,36 +1,29 @@
-
 export async function getStaticProps() {
   try {
     const page = 1;
-    const [data,
-      // mangapercategory,
-      categories, latestmangas, latestmangachapters] = await Promise.all([
-        getMangasHomePage(),
-        // getHomePageMangaPerCategory(),
-        getCategories(),
-        GetLatestMangas(page),
-        getLatestMangaChapters(),
-      ]);
+    const [data, categories, latestmangas, latestmangachapters] = await Promise.all([
+      getMangasHomePage(),
+      getCategories(),
+      GetLatestMangas(page),
+      getLatestMangaChapters(),
+    ]);
 
-    if (data.error) {
-      return { props: { errorCode: 404 } };
-    }
-
-
+    if (data.error) { return { props: { errorCode: 404 } }; }
     return {
       props: {
         mangas: data?.data || [],
-        // mangapercategory: mangapercategory,
         categories: categories?.categories || [],
         latestmangas: latestmangas.mangas,
         latestmangachapters: latestmangachapters,
       },
+      revalidate: 21600, // Revalidate every 6 hours (21600 seconds)
     };
   } catch (error) {
     console.error(error);
     return { props: { errorCode: 500 } };
   }
 }
+
 
 
 
@@ -46,7 +39,7 @@ import "swiper/swiper-bundle.css";
 import { useState, useEffect } from 'react';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { getMangasHomePage, getHomePageMangaPerCategory, GetLatestMangas } from "@/actions/manga";
+import { getMangasHomePage, GetLatestMangas } from "@/actions/manga";
 import { getLatestMangaChapters } from '@/actions/chapter';
 import { getCategories } from '@/actions/category';
 import { FaArrowAltCircleRight } from "react-icons/fa";
@@ -62,23 +55,6 @@ import { useRouter } from 'next/router';
 
 export default function Home({ mangas, categories, latestmangas, latestmangachapters }) {
 
-  // const [selectedCategory, setSelectedCategory] = useState('');
-  // const handleChangeCategory = (category) => { setSelectedCategory(category); };
-
-  /*
-  const getMangasToDisplay = () => {
-    let mangasToDisplay = [];
-    if (selectedCategory === '') { mangasToDisplay = Object.values(mangapercategory).flat(); }
-    else { mangasToDisplay = mangapercategory[selectedCategory] || []; }
-    const seenSlugs = new Set();
-    const uniqueMangas = mangasToDisplay.filter(manga => {
-      if (seenSlugs.has(manga.slug)) { return false; }
-      seenSlugs.add(manga.slug);
-      return true;
-    });
-    return uniqueMangas;
-  };
-  */
 
   const router = useRouter();
   const [query, setQuery] = useState('');
@@ -177,12 +153,9 @@ export default function Home({ mangas, categories, latestmangas, latestmangachap
       </form>
 
 
-
-
       <h1 className={`${roboto.className}  text-[white] tracking-wider font-extrabold text-2xl px-3 text-center my-10`}>
         {`${APP_NAME}: Ultimate Destination For Reading Mangas`}
       </h1>
-
 
 
       <Swiper loop={true} centeredSlides={true}
@@ -236,15 +209,12 @@ export default function Home({ mangas, categories, latestmangas, latestmangachap
 
 
 
-
-
-
       <h2 className={`${roboto.className} my-7 font-bold text-2xl tracking-wider text-white text-center px-3`}>Latest Chapters</h2>
       <div className="max-w-[1400px] mx-auto px-2 sm:px-6 lg:px-8 py-4 text-white">
         <div className="flex sm:gap-12 gap-3 flex-wrap justify-center">
           {latestmangachapters?.map((manga, index) => (
-            <div key={index} className="bg-[#091e25] overflow-hidden shadow rounded-b sm:w-[210px] w-[140px] flex flex-col">
-              <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}`}> <img className='sm:w-[210px] sm:h-[250px] object-cover w-[140px] h-[160px]' src={manga?.photo} alt={manga?.manganame} /></Link>
+            <div key={index} className="bg-[#091e25] overflow-hidden shadow rounded-b sm:w-[210px] w-[45%] flex flex-col">
+              <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}`}> <img className='sm:w-[210px] sm:h-[250px] object-cover w-full' src={manga?.photo} alt={manga?.manganame} /></Link>
               <div className="px-4 py-5">
                 <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}`}>
                   <div className={`${roboto3.className} sm:text-[15px] text-[12px] font-bold w-[115px] pb-3`}>{manga?.mangaName}</div>
@@ -323,43 +293,6 @@ export default function Home({ mangas, categories, latestmangas, latestmangachap
           )).slice(0, 25)}
         </Swiper>
       </div>
-
-
-
-      {/* <div className='max-w-[1262px] mx-auto pt-8'>
-        <div className='flex gap-3 justify-center md:mt-[80px] mt-5 bg-[#07161a] flex-wrap py-5 px-2 md:py-0 md:px-0 rounded'>
-          <div
-            onClick={() => handleChangeCategory('')}
-            className={`cursor-pointer px-3 uppercase py-2 text-[13px] text-white font-bold ${selectedCategory === '' ? 'bg-[#2a798f] rounded' : 'text-white hover:scale-105 transition-transform active:scale-90 hover:bg-[#2a798f] hover:rounded'}`}>
-            All Mangas
-          </div>
-          {categories?.map((category, index) => (
-            <p key={index} onClick={() => handleChangeCategory(category?.name)}
-              className={`cursor-pointer px-3 uppercase py-2 text-[13px] text-white font-bold ${selectedCategory === category?.name ? 'bg-[#2a798f] rounded' : 'text-white hover:scale-105 transition-transform active:scale-90 hover:bg-[#2a798f] hover:rounded'}`}>
-              {category?.name}
-            </p>
-          ))}
-        </div>
-      </div> */}
-
-      {/* <h2 className={`${roboto.className} text-2xl tracking-wider font-extrabold my-6 text-center uppercase text-white`}>
-        {selectedCategory === '' ? 'All Mangas' : selectedCategory}
-      </h2> */}
-
-      {/* <div className="max-w-[1300px] mx-auto px-2 sm:px-6 lg:px-8 py-4 text-white">
-        <div className="flex sm:gap-12 gap-3 flex-wrap justify-center">
-          {getMangasToDisplay().map((manga, index) => (
-            <Link prefetch={false} href={`${DOMAIN}/manga/${manga?.slug}`} key={index} className="bg-[#091e25] overflow-hidden shadow rounded-b sm:w-[190px] w-[140px] flex flex-col hover:scale-110 transition-transform">
-              <img className='sm:w-[190px] sm:h-[220px] h-[160px] w-[140px] object-cover' src={manga?.photo} alt={manga?.name} />
-              <div className="px-4 py-5">
-                <p className="sm:text-[12px] font-bold text-[10px] pb-1.5">{`Total Chapters: ${manga?.totalChapters ?? 0}`}</p>
-                <p className="sm:text-[14px] text-[12px] font-bold ">{manga?.name}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div> */}
-
 
 
       <div className={`${roboto.className} text-2xl text-center mb-10 text-white font-bold tracking-wider mt-10`}>All Categories</div>
